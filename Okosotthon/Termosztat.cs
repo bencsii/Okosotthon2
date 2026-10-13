@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 
 namespace Okosotthon
 {
@@ -23,7 +24,9 @@ namespace Okosotthon
                 string ertek = parancs.Substring(20);
                 double homerseklet;
 
-                if (double.TryParse(ertek, out homerseklet))
+                // Parse using invariant culture so commands with dot as decimal separator
+                // (e.g. "24.5") work consistently regardless of system locale.
+                if (double.TryParse(ertek, NumberStyles.Float, CultureInfo.InvariantCulture, out homerseklet))
                 {
                     this.CelHomerseklet = homerseklet;
                 }
