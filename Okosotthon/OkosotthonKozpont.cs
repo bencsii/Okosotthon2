@@ -40,5 +40,33 @@ namespace Okosotthon
 
             return sikeresTeszt;
         }
+
+        // Start emergency alarms on all devices that implement IHangjelzo
+        public void InditsOsszesVeszjelzest()
+        {
+            foreach (OkosEszkoz eszkoz in this.eszkozok)
+            {
+                if (eszkoz is IHangjelzo h)
+                {
+                    h.VeszjelzesInditasa();
+                }
+            }
+        }
+
+        // Collect statistics from all devices that implement IStatisztika
+        public List<string> OsszesStatisztikaLekerdezese()
+        {
+            var eredmenyek = new List<string>();
+
+            foreach (OkosEszkoz eszkoz in this.eszkozok)
+            {
+                if (eszkoz is IStatisztika s)
+                {
+                    eredmenyek.Add(s.StatisztikatKeszit());
+                }
+            }
+
+            return eredmenyek;
+        }
     }
 }

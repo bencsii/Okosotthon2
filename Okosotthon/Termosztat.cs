@@ -5,10 +5,11 @@ using System.Globalization;
 
 namespace Okosotthon
 {
-    public class Termosztat : OkosEszkoz
+    public class Termosztat : OkosEszkoz, IIdozitheto, IStatisztika
     {
         public double JelenlegiHomerseklet { get; private set; }
         public double CelHomerseklet { get; private set; }
+        private int idozitoPerc;
 
         public Termosztat(string azonosito, string nev, double celHomerseklet)
             : base(azonosito, nev)
@@ -31,6 +32,24 @@ namespace Okosotthon
                     this.CelHomerseklet = homerseklet;
                 }
             }
+        }
+
+        // IIdozitheto implementation
+        public void IdozitestBeallit(int perc)
+        {
+            if (perc < 0) perc = 0;
+            this.idozitoPerc = perc;
+        }
+
+        public int GetMaradtIdo()
+        {
+            return this.idozitoPerc;
+        }
+
+        // IStatisztika implementation
+        public string StatisztikatKeszit()
+        {
+            return $"Termosztat {this.Nev}: jelenlegi={this.JelenlegiHomerseklet}, cel={this.CelHomerseklet}";
         }
 
         public override string AllapotJelentes()
